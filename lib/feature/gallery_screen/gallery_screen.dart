@@ -22,6 +22,12 @@ class _GalleryScreenState extends State<GalleryScreen> {
   final ScrollController _controller = ScrollController();
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) => BlocBuilder<GalleryBloc, GalleryState>(
         bloc: widget.galleryBloc,
         builder: (bloc, state) {

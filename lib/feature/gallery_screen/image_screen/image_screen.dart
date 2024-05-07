@@ -40,7 +40,7 @@ class ImageScreen extends StatelessWidget {
                     child: CachedNetworkImage(
                       placeholder: (context, url) => CachedNetworkImage(
                         imageUrl: image.previewURL,
-                        fit: BoxFit.fitHeight,
+                        fit: BoxFit.contain,
                       ),
                       imageUrl: image.largeImageURL,
                     ),
@@ -65,46 +65,66 @@ class ImageScreen extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: FractionallySizedBox(
-                heightFactor: 0.1,
+                heightFactor: 0.08,
                 widthFactor: 0.6,
-                child: Row(
+                child: Column(
                   children: [
-                    const Icon(
-                      Icons.remove_red_eye_outlined,
-                      color: infoColor,
-                      shadows: [
-                        BoxShadow(
-                          color: infoColor,
-                          offset: Offset(0.06, 0.06),
+                    Flexible(
+                      flex: 3,
+                      child: Center(
+                        child: Text(
+                          image.tags.toString(),
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+                          style: textStyle,
                         ),
-                      ],
-                    ),
-                    Text(
-                      image.views.toString(),
-                      maxLines: 1,
-                      textAlign: TextAlign.start,
-                      style: textStyle,
-                    ),
-                    const AspectRatio(aspectRatio: 0.5),
-                    const SizedBox(width: 5),
-                    Expanded(
-                      child: Text(
-                        image.tags.toString(),
-                        textAlign: TextAlign.center,
-                        maxLines: 3,
-                        style: textStyle,
                       ),
                     ),
-                    const SizedBox(width: 5),
-                    AspectRatio(
-                      aspectRatio: 0.5,
-                      child: FractionallySizedBox(
-                        heightFactor: 0.5,
-                        child: InkWell(
-                          // open pixabay page to download image
-                          onTap: () => launchUrlString(image.pageURL),
-                          child: const Icon(
-                            Icons.save_alt_outlined,
+                    Flexible(
+                      flex: 2,
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Icons.remove_red_eye_outlined,
+                            color: infoColor,
+                            shadows: [
+                              BoxShadow(
+                                color: infoColor,
+                                offset: Offset(0.06, 0.06),
+                              ),
+                            ],
+                          ),
+                          Text(
+                            image.views.toString(),
+                            maxLines: 1,
+                            textAlign: TextAlign.start,
+                            style: textStyle,
+                          ),
+                          const SizedBox(width: 10),
+                          const Spacer(),
+                          InkWell(
+                            // open pixabay page to download image
+                            onTap: () => launchUrlString(image.pageURL),
+                            child: const Icon(
+                              Icons.save_alt_outlined,
+                              color: infoColor,
+                              shadows: [
+                                BoxShadow(
+                                  color: infoColor,
+                                  offset: Offset(0.1, 0.1),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                            image.likes.toString(),
+                            maxLines: 1,
+                            textAlign: TextAlign.end,
+                            style: textStyle,
+                          ),
+                          const Icon(
+                            Icons.favorite_outline,
                             color: infoColor,
                             shadows: [
                               BoxShadow(
@@ -113,25 +133,8 @@ class ImageScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
+                        ],
                       ),
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      image.likes.toString(),
-                      maxLines: 1,
-                      textAlign: TextAlign.end,
-                      style: textStyle,
-                    ),
-                    const Icon(
-                      Icons.favorite_outline,
-                      color: infoColor,
-                      shadows: [
-                        BoxShadow(
-                          color: infoColor,
-                          offset: Offset(0.1, 0.1),
-                        ),
-                      ],
                     ),
                   ],
                 ),
