@@ -33,20 +33,20 @@ class GalleryBloc extends Bloc<GalleryEvent, GalleryState> {
     emit((await _loadPage(state)).copyWith(isAdditionalLoading: false));
   }
 
+  /// in this function we update search query and load first page
   Future<void> _search(String query, Emitter<GalleryState> emit) async {
-    emit(state.copyWith(
-      loadedPages: 0,
-      isLoading: true,
-      query: query,
-      images: [],
-      allLoaded: false,
-    ));
+    if (query == state.query) {
+      //if query not changed we don't need load anything
+      return;
+    }
+    emit(GalleryState(query: query));
     emit((await _loadPage(state)).copyWith(isLoading: false));
   }
 
+  /// function load page with images and check if all pages are loaded
   Future<GalleryState> _loadPage(GalleryState state) async {
     final images = await _pixabayRepository.getImages(
-      searchRequest: state.query,
+      searchRequest: state.query??'',
       page: state.loadedPages,
       perPage: 20,
     );

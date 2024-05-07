@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:pixabay_gallery/core/http/interceptors/key_interceptor.dart';
 import 'package:pixabay_gallery/core/http/interceptors/log_interceptor.dart';
 
+/// DioProvider is class that configure Dio clients 
 class DioProvider {
   final CustomLogInterceptor _logInterceptor;
   final KeyInterceptor _keyInterceptor;

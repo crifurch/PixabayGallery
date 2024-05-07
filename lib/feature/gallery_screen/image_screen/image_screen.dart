@@ -101,6 +101,7 @@ class ImageScreen extends StatelessWidget {
                       child: FractionallySizedBox(
                         heightFactor: 0.5,
                         child: InkWell(
+                          // open pixabay page to download image
                           onTap: () => launchUrlString(image.pageURL),
                           child: const Icon(
                             Icons.save_alt_outlined,

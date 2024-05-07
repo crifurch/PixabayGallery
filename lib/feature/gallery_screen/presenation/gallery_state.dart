@@ -7,7 +7,7 @@ class GalleryState with _$GalleryState {
     @Default(false) bool isAdditionalLoading,
     @Default(0) loadedPages,
     @Default([]) List<PixabayImage> images,
-    @Default('') query,
+    @Default(null)String? query,
     @Default(false) allLoaded,
   }) = _RunGameState;
 }

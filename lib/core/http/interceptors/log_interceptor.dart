@@ -4,9 +4,10 @@ import 'dart:math';
 import 'package:dio/dio.dart';
 import 'package:logger/logger.dart';
 
+/// CustomLogInterceptor provide you beautiful and understandable log of all Dio client's request
 class CustomLogInterceptor extends Interceptor {
-  final Logger _logger;
   static const _encoder = JsonEncoder.withIndent('  ');
+  final Logger _logger;
 
   CustomLogInterceptor(this._logger);
 

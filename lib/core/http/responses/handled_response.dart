@@ -54,26 +54,10 @@ class HandledResponse extends ServerResponse {
       return response;
     }
     final data = response.data;
-    switch (dioResponse.statusCode) {
-      case 401:
-        return UserNotAuthorized(
-          error: data?['error']?.toString() ?? '',
-        );
-      case 422:
-        return ValidationError(
-          error: data?['error']?.toString() ?? '',
-        );
-      case 403:
-        return ForbiddenError(
-          error: data?['error']?.toString() ?? '',
-        );
-      case 406:
-        return NotAcceptableError(
-          error: data?['error']?.toString() ?? '',
-        );
-      default:
-        return UnknownError(code: dioResponse.statusCode ?? 0);
-    }
+    return ResponseError.fromCode(
+      dioResponse.statusCode ?? 0,
+      error: data?['error']?.toString() ?? '',
+    );
   }
 
   factory HandledResponse.fromException(Exception exception) {

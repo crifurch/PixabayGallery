@@ -16,6 +16,7 @@ class GallerySearchBar extends StatefulWidget {
 }
 
 class _GallerySearchBarState extends State<GallerySearchBar> {
+  ///needs for debouncing
   Timer? _timer;
 
   @override
@@ -50,16 +51,7 @@ class _GallerySearchBarState extends State<GallerySearchBar> {
                     border: OutlineInputBorder(),
                     labelText: 'Search',
                   ),
-                  onChanged: (value) {
-                    if (_timer != null) {
-                      _timer?.cancel();
-                      _timer = null;
-                    }
-                    _timer = Timer(const Duration(milliseconds: 800), () {
-                      _timer = null;
-                      widget.onSearch?.call(value);
-                    });
-                  },
+                  onChanged: _onChangeSearchQuery,
                 ),
               ),
             ),
@@ -67,4 +59,15 @@ class _GallerySearchBarState extends State<GallerySearchBar> {
           ],
         ),
       );
+
+  void _onChangeSearchQuery(String value) {
+    if (_timer != null) {
+      _timer?.cancel();
+      _timer = null;
+    }
+    _timer = Timer(const Duration(milliseconds: 800), () {
+      _timer = null;
+      widget.onSearch?.call(value);
+    });
+  }
 }

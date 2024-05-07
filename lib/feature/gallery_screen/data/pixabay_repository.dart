@@ -23,7 +23,7 @@ class PixabayRepository {
         HandledResponse.fromDioResult(result),
         converter: (data) {
           if (!data.containsKey('hits')) {
-            return PixabayPage.empty();
+            return null;
           }
           return PixabayPage.fromJson(data);
         },

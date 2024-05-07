@@ -13,9 +13,5 @@ class PixabayPage {
     required this.hits,
   });
 
-  PixabayPage.empty()
-      : hits = [],
-        totalHits = 0;
-
   factory PixabayPage.fromJson(Map<String, dynamic> json) => _$PixabayPageFromJson(json);
 }

@@ -7,23 +7,32 @@ typedef ResponseErrorFactory = ResponseError Function({
 
 class ResponseError extends HandledResponse {
   const ResponseError._(
-    int code, {
+    super.code, {
     super.friendlyMessage = '',
     super.error = '',
-  })  : assert(code < 200 || code > 204),
-        super(code);
-}
+  }) : assert(code < 200 || code > 204);
 
-extension HandledResponseExtension on HandledResponse {
-  HandledResponse get asSuccessful {
-    assert(isSuccess, 'Response is not successful');
-    return this;
-  }
-
-  ResponseError get asError {
-    assert(!isSuccess, 'Response is successful');
-    assert(this is ResponseError, 'Response is not an error');
-    return this as ResponseError;
+  factory ResponseError.fromCode(
+    int code, {
+    String friendlyMessage = '',
+    String error = '',
+  }) {
+    ResponseError Function({
+      String friendlyMessage,
+      String error,
+    })? constructor;
+    constructor = {
+      403: ForbiddenError.new,
+      404: NotFoundError.new,
+      503: HostUnavailableError.new,
+      401: UserNotAuthorized.new,
+      402: ValidationError.new,
+      406: NotAcceptableError.new,
+    }[code];
+    if (constructor != null) {
+      return constructor.call(error: error, friendlyMessage: friendlyMessage);
+    }
+    return UnknownError(code: code, friendlyMessage: friendlyMessage, error: error);
   }
 }
 
@@ -75,4 +84,17 @@ class UnknownError extends ResponseError {
     super.friendlyMessage = '',
     super.error = '',
   }) : super._(code ?? 0);
+}
+
+extension HandledResponseExtension on HandledResponse {
+  HandledResponse get asSuccessful {
+    assert(isSuccess, 'Response is not successful');
+    return this;
+  }
+
+  ResponseError get asError {
+    assert(!isSuccess, 'Response is successful');
+    assert(this is ResponseError, 'Response is not an error');
+    return this as ResponseError;
+  }
 }

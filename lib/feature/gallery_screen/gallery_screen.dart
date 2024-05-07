@@ -34,7 +34,6 @@ class _GalleryScreenState extends State<GalleryScreen> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
-
                 ),
               ),
             );
